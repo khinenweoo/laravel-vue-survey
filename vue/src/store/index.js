@@ -25,11 +25,19 @@ const store = createStore({
                     return data;
                 })
         },
+        logout({commit}) {
+            return axiosClient.post('/logout')
+                .then(response => {
+                    commit('logout')
+                    return response;
+                })
+        }
     },
     mutations: {
         logout: (state) => {
             state.user.data = {};
             state.user.token = null;
+            sessionStorage.removeItem('TOKEN');
         },
         setUser: (state, userData) => {
             //to save the received user token in data inside the state
